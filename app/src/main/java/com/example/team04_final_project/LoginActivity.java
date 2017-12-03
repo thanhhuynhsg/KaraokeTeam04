@@ -1,9 +1,11 @@
 package com.example.team04_final_project;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,9 +16,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    private GoogleApiClient googleApiClient;
+    public GoogleApiClient googleApiClient;
 
     private SignInButton signInButton;
     private Button btnskip;
@@ -37,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
 
         signInButton=(SignInButton) findViewById(R.id.signInButton);
         signInButton.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (result.isSuccess()){
             goMainScreen();
         }else {
-            Toast.makeText(this, "You are not login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -86,6 +91,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
     }
+
 }

@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -115,7 +116,8 @@ public class SeeDetails extends AppCompatActivity {
                     View mView = getLayoutInflater().inflate(R.layout.login_layout, null);
                     LoginButton btnLogin_Face = (LoginButton) mView.findViewById(R.id.login_Facebook);
                     //LoginButton btnGmail = (LoginButton) mView.findViewById(R.id.loginGmail);
-                    Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
+                    //Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
+                    ImageButton btnClose = (ImageButton) mView.findViewById(R.id.btnClose);
                     mbuilder.setView(mView);
                     final AlertDialog dialog = mbuilder.create();
                     dialog.show();
@@ -127,6 +129,13 @@ public class SeeDetails extends AppCompatActivity {
                             dialog.cancel();
                         }
                     });
+
+                    btnClose.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                    }
+                });
                     /*btnGmail.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -135,12 +144,12 @@ public class SeeDetails extends AppCompatActivity {
                             dialog.cancel();
                         }
                     });*/
-                    btnCancelADSD.setOnClickListener(new View.OnClickListener() {
+                    /*btnCancelADSD.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
                         }
-                    });
+                    });*/
                 //}
                 //else{
                 //    SeeDetails.this.onClick();
