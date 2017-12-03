@@ -1,5 +1,6 @@
 package com.example.team04_final_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.team04_final_project.Fragment.GPSFragment;
 import com.example.team04_final_project.Fragment.KaraokeFragment;
@@ -21,12 +23,15 @@ public class MainActivity extends AppCompatActivity {
     KaraokeFragment karaokeFragment;
     SearchFragment searchFragment;
     MenuItem prevMenuItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         viewPager = (ViewPager) findViewById(R.id.viewpager);

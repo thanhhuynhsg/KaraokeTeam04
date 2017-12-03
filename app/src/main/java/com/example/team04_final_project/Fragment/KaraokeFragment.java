@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.team04_final_project.CreateKaraoke;
@@ -73,7 +74,8 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
                     View mView = getLayoutInflater().inflate(R.layout.login_layout, null);
                     LoginButton btnLogin_Face = (LoginButton) mView.findViewById(R.id.login_Facebook);
                     //LoginButton btnGmail = (LoginButton) mView.findViewById(R.id.loginGmail);
-                    Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
+                    //Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
+                    ImageButton btnClose = (ImageButton) mView.findViewById(R.id.btnClose);
                     mbuilder.setView(mView);
                     final AlertDialog dialog = mbuilder.create();
                     dialog.show();
@@ -81,7 +83,7 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(getActivity(), "Login Facebook!", Toast.LENGTH_LONG).show();
-                            openCearteKaraoke();
+                            openCreateKaraoke();
                             dialog.cancel();
                         }
                     });
@@ -93,12 +95,18 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
                                 dialog.cancel();
                             }
                         });*/
-                    btnCancelADSD.setOnClickListener(new View.OnClickListener() {
+                    btnClose.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View view) {
+                            dialog.cancel();
+                        }
+                    });
+                    /*btnCancelADSD.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
                         }
-                    });
+                    });*/
                 //}
                 //else {
                 //    openCearteKaraoke();
@@ -108,7 +116,7 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
         return view;
     }
 
-    public void openCearteKaraoke() {
+    public void openCreateKaraoke() {
         Intent intent = new Intent(getActivity(),CreateKaraoke.class);
         startActivity(intent);
     }
