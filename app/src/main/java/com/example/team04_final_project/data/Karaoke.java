@@ -5,25 +5,47 @@ package com.example.team04_final_project.data;
  */
 
 public class Karaoke {
-    private int mLogo;
+    private double mLat;
+    private double mLon;
     private String mName;
     private String mAddress;
+    private String mPhone;
     private String mPrice;
+    private String mLogo;
+    private String mDescription;
+    public Karaoke(){
 
-    public Karaoke(int mLogo, String mName, String mAddress, String mPrice) {
-        this.mLogo = mLogo;
+    }
+    public Karaoke(double mLat, double mLon, String mName, String mAddress, String mPhone, String mPrice, String mLogo, String mDescription) {
+        this.mLat = mLat;
+        this.mLon = mLon;
         this.mName = mName;
         this.mAddress = mAddress;
+        this.mPhone = mPhone;
         this.mPrice = mPrice;
-    }
-
-    public int getmLogo() {
-        return mLogo;
-    }
-
-    public void setmLogo(int mLogo) {
         this.mLogo = mLogo;
+        this.mDescription = mDescription;
     }
+
+    public double getmLat() {return mLat;}
+
+    public void setmLat(double mLat) {this.mLat = mLat;}
+
+    public double getmLon() {return mLon;}
+
+    public void setmLon(double mLon) {this.mLon = mLon;}
+
+    public String getmPhone() {return mPhone;}
+
+    public void setmPhone(String mPhone) {this.mPhone = mPhone;}
+
+    public String getmDescription() {return mDescription;}
+
+    public void setmDescription(String mDescription) {this.mDescription = mDescription;}
+
+    public String getmLogo() {return mLogo;}
+
+    public void setmLogo(String mLogo) {this.mLogo = mLogo;}
 
     public String getmName() {
         return mName;

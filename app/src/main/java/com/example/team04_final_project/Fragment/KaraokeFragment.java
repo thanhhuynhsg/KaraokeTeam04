@@ -1,6 +1,7 @@
 package com.example.team04_final_project.Fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,12 @@ import com.example.team04_final_project.SeeDetails;
 import com.example.team04_final_project.adapter.KaraokeAdapter;
 import com.example.team04_final_project.data.Karaoke;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +40,10 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
     private RecyclerView rcvListKaraoke;
     private KaraokeAdapter karaokeAdapter;
     private List<Karaoke> karaokeList;
+
+    DatabaseReference mData;
+
+
     public KaraokeFragment() {
         // Required empty public constructor
     }
@@ -43,28 +54,52 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_karaoke, container, false);
-
-
         karaokeList = new ArrayList<Karaoke>();
-        for(int i = 1; i <= 20; i++) {
-            karaokeList.add(new Karaoke(R.drawable.mic, "Karaoke 01", "Quan 2, Ho Chi Minh", "100.000đ"));
-            karaokeList.add(new Karaoke(R.drawable.mic, "Karaoke 02", "Quan 5, Ho Chi Minh", "200.000đ"));
-            karaokeList.add(new Karaoke(R.drawable.mic, "Karaoke 03", "Quan 10, Ho Chi Minh", "300.000đ"));
-            karaokeList.add(new Karaoke(R.drawable.mic, "Karaoke 04", "Quan 3, Ho Chi Minh", "400.000đ"));
-            karaokeList.add(new Karaoke(R.drawable.mic, "Karaoke 05", "Quan 1, Ho Chi Minh", "500.000đ"));
-        }
-
-
         rcvListKaraoke = (RecyclerView) view.findViewById(R.id.rcv_ListKaraoke);
         rcvListKaraoke.setHasFixedSize(true);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rcvListKaraoke.setLayoutManager(layoutManager);
+
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), layoutManager.getOrientation());
         rcvListKaraoke.addItemDecoration(dividerItemDecoration);
+
         karaokeAdapter = new KaraokeAdapter(karaokeList, getActivity(), this);
         rcvListKaraoke.setAdapter(karaokeAdapter);
 
+        mData = FirebaseDatabase.getInstance().getReference();
 
+        mData.child("Karaoke").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                Karaoke kara = dataSnapshot.getValue(Karaoke.class);
+                karaokeList.add(new Karaoke(kara.getmLat(),kara.getmLon(),kara.getmName(),kara.getmAddress(),kara.getmPhone(),kara.getmPrice(),kara.getmLogo(),kara.getmDescription()));
+                karaokeAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
         fabCreateKaraoke =(FloatingActionButton) view.findViewById(R.id.fab_CreateKaraoke);
         fabCreateKaraoke.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +157,11 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
     }
     @Override
     public void onItemClicked(int position) {
+       // String key = mData.child("Karaoke").getKey();
         Intent intent = new Intent(getActivity(),SeeDetails.class);
+        //Bundle bun =  new Bundle();
+        // bun.putString("key",key);
+        //intent.putExtras(bun);
         startActivity(intent);
         Toast.makeText(getActivity(),"Position is " + position, Toast.LENGTH_LONG).show();
     }
