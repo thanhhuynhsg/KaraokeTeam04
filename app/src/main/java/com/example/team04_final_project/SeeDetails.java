@@ -157,7 +157,12 @@ public class SeeDetails extends AppCompatActivity {
             }
         });
     }
-
+//    private  void initUi(){
+//        Intent intent = getIntent();
+//        Bundle bun = intent.getExtras();
+//        String key = bun.getString("key");
+//
+//    }
     public void onClick(){
         final AlertDialog.Builder builder_rating = new AlertDialog.Builder(SeeDetails.this);
         View mView_rating = getLayoutInflater().inflate(R.layout.rating_bar, null);

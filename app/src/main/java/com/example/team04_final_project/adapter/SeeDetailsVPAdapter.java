@@ -1,6 +1,7 @@
 package com.example.team04_final_project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -54,4 +55,5 @@ public class SeeDetailsVPAdapter extends PagerAdapter {
         View view = (View) object;
         vp.removeView(view);
     }
+
 }

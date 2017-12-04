@@ -1,7 +1,10 @@
 package com.example.team04_final_project.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.team04_final_project.R;
 import com.example.team04_final_project.data.Karaoke;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import java.util.List;
 
@@ -36,7 +40,9 @@ public class KaraokeAdapter extends RecyclerView.Adapter<KaraokeAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Karaoke karaoke = karaokeList.get(position);
-        holder.ivLogo.setImageResource(karaoke.getmLogo());
+        byte[] imagearr = Base64.decode(karaoke.getmLogo().toString(),Base64.DEFAULT);
+        Bitmap bmLogo = BitmapFactory.decodeByteArray(imagearr,0,imagearr.length);
+        holder.ivLogo.setImageBitmap(bmLogo);
         holder.tvName.setText(karaoke.getmName());
         holder.tvAddress.setText(karaoke.getmAddress());
         holder.tvPrice.setText(karaoke.getmPrice());
