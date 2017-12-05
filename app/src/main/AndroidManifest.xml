@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.team04_final_project">
 
     <uses-sdk
@@ -40,12 +41,9 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
-
-        </activity>
+            android:label="@string/title_activity_main" />
         <activity android:name=".SeeDetails" />
-        <activity android:name=".CreateKaraoke">
-        </activity>
+        <activity android:name=".CreateKaraoke" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

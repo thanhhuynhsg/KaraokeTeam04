@@ -44,7 +44,7 @@ public class GPSFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return  inflater.inflate(R.layout.fragment_gps, container, false);
+        return inflater.inflate(R.layout.fragment_gps, container, false);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class GPSFragment extends Fragment {
 
         FragmentManager fm = getChildFragmentManager();
         mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
-        if(mapFragment == null){
+        if (mapFragment == null) {
             mapFragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, mapFragment).commit();
         } else {
@@ -61,17 +61,27 @@ public class GPSFragment extends Fragment {
                 @Override
                 public void onMapReady(GoogleMap googleMap) {
                     mMap = googleMap;
-                    LatLng myhome = new LatLng(10.8398677,106.5998327);
+                    LatLng myhome = new LatLng(10.8398677, 106.5998327);
                     mMap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon))
-                            .anchor(0.0f,1.0f)
+                            .anchor(0.0f, 1.0f)
                             .position(myhome)
                             .title("Marker in myHome")
                             .snippet("Welcome to myHome")
                     );
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myhome,17));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myhome, 17));
                     mMap.getUiSettings().setZoomControlsEnabled(true);
-
+                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    mMap.setMyLocationEnabled(true);
                 }
             });
         }
