@@ -13,4 +13,5 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+
 </FrameLayout>

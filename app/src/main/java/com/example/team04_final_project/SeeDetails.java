@@ -27,6 +27,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.team04_final_project.Fragment.GPSFragment;
+
+
 public class SeeDetails extends AppCompatActivity {
     ImageView ivBackSeeDetails;
     ViewPager viewPager;
@@ -35,6 +38,8 @@ public class SeeDetails extends AppCompatActivity {
     private ImageView[] dots;
     private Button btnRatingBar, btnChiDuong;
     private GoogleSignInClient mGoogleSignInClient;
+
+    GPSFragment gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +109,7 @@ public class SeeDetails extends AppCompatActivity {
         btnChiDuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SeeDetails.this,MainActivity.class);
+                Intent intent = new Intent(SeeDetails.this, DirectionActivity.class);
                 startActivity(intent);
             }
         });
