@@ -53,13 +53,20 @@
             android:text="TextView"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
-
         <RatingBar
             android:id="@+id/ratingBar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5" />
+            android:layout_marginBottom="5dp"
+            android:clickable="false"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="5"
+            android:stepSize="1.0" />
+        <!--</ScrollView>-->
+
     </LinearLayout>
+
 
 </LinearLayout>

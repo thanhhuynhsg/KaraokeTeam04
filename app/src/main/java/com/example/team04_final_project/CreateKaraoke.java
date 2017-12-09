@@ -54,6 +54,7 @@ public class CreateKaraoke extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_create_karaoke);
+        // Ánh xạ
         chonhinh = (Button)findViewById(R.id.btn_selectimage);
         luu = (Button)findViewById(R.id.btn_save);
         huy = (Button)findViewById(R.id.btn_cancel);
@@ -86,6 +87,7 @@ public class CreateKaraoke extends AppCompatActivity {
                 finish();
             }
         });
+
     }
     private  class  GetCoordinates extends AsyncTask<String,Void,String> {
         ProgressDialog dialog = new ProgressDialog(CreateKaraoke.this);
@@ -131,7 +133,7 @@ public class CreateKaraoke extends AppCompatActivity {
                 Karaoke_id = mData.push().getKey();
 
                 // Chép data vào mảng
-                Karaoke karaoke = new Karaoke(lat, lon,ten.getText().toString(),
+                Karaoke karaoke = new Karaoke(Karaoke_id,lat, lon,ten.getText().toString(),
                         diachi.getText().toString(),sdt.getText().toString(),gia.getText().toString(),
                         Chuoihinh,mota.getText().toString());
 
@@ -162,7 +164,6 @@ public class CreateKaraoke extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(intent,REQUEST_CHOOSE_PHOTO);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){

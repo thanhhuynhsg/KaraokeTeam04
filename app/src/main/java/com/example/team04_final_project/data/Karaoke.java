@@ -5,6 +5,7 @@ package com.example.team04_final_project.data;
  */
 
 public class Karaoke {
+    private String mId;
     private float mLat;
     private float mLon;
     private String mName;
@@ -16,7 +17,9 @@ public class Karaoke {
     public Karaoke(){
 
     }
-    public Karaoke(float mLat, float mLon, String mName, String mAddress, String mPhone, String mPrice, String mLogo, String mDescription) {
+
+    public Karaoke(String mId, float mLat, float mLon, String mName, String mAddress, String mPhone, String mPrice, String mLogo, String mDescription) {
+        this.mId = mId;
         this.mLat = mLat;
         this.mLon = mLon;
         this.mName = mName;
@@ -26,6 +29,10 @@ public class Karaoke {
         this.mLogo = mLogo;
         this.mDescription = mDescription;
     }
+
+    public String getmId() {return mId;}
+
+    public void setmId(String mId) {this.mId = mId;}
 
     public float getmLat() {return mLat;}
 

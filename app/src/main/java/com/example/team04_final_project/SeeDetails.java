@@ -16,14 +16,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team04_final_project.adapter.SeeDetailsInforAdapter;
 import com.example.team04_final_project.adapter.SeeDetailsVPAdapter;
+import com.example.team04_final_project.data.Karaoke;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,6 +40,8 @@ public class SeeDetails extends AppCompatActivity {
     private ImageView[] dots;
     private Button btnRatingBar, btnChiDuong;
     private GoogleSignInClient mGoogleSignInClient;
+    int position = 0;
+    private List<Karaoke> karaokeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,13 +163,19 @@ public class SeeDetails extends AppCompatActivity {
                 //}
             }
         });
+        karaokeList = new ArrayList<Karaoke>();
+        Intent intent = getIntent();
+        position= intent.getExtras().getInt("Pos");
+
+        final SeeDetailsInforAdapter detailAdapter = new SeeDetailsInforAdapter(this,karaokeList);
+        final TextView name = (TextView)findViewById(R.id.txt_name);
+        final TextView address = (TextView)findViewById(R.id.txt_address);
+        final TextView price = (TextView)findViewById(R.id.txt_price);
+        final TextView phone = (TextView)findViewById(R.id.txt_phone);
+        final TextView description = (TextView)findViewById(R.id.txt_description);
+
+       // name.setText(detailAdapter.);
     }
-//    private  void initUi(){
-//        Intent intent = getIntent();
-//        Bundle bun = intent.getExtras();
-//        String key = bun.getString("key");
-//
-//    }
     public void onClick(){
         final AlertDialog.Builder builder_rating = new AlertDialog.Builder(SeeDetails.this);
         View mView_rating = getLayoutInflater().inflate(R.layout.rating_bar, null);
