@@ -40,7 +40,7 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
     private RecyclerView rcvListKaraoke;
     private KaraokeAdapter karaokeAdapter;
     private List<Karaoke> karaokeList;
-
+    private Karaoke karaokeSelection;
     DatabaseReference mData;
 
 
@@ -72,9 +72,8 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
         mData.child("Karaoke").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
                 Karaoke kara = dataSnapshot.getValue(Karaoke.class);
-                karaokeList.add(new Karaoke(kara.getmLat(),kara.getmLon(),kara.getmName(),kara.getmAddress(),kara.getmPhone(),kara.getmPrice(),kara.getmLogo(),kara.getmDescription()));
+                karaokeList.add(new Karaoke(kara.getmId(),kara.getmLat(),kara.getmLon(),kara.getmName(),kara.getmAddress(),kara.getmPhone(),kara.getmPrice(),kara.getmLogo(),kara.getmDescription()));
                 karaokeAdapter.notifyDataSetChanged();
             }
 
@@ -100,6 +99,7 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
 
 
         });
+
         fabCreateKaraoke =(FloatingActionButton) view.findViewById(R.id.fab_CreateKaraoke);
         fabCreateKaraoke.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +148,7 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
                 //}
             }
         });
+
         return view;
     }
 
@@ -157,11 +158,9 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
     }
     @Override
     public void onItemClicked(int position) {
-       // String key = mData.child("Karaoke").getKey();
+       // karaokeSelection.getmId();
         Intent intent = new Intent(getActivity(),SeeDetails.class);
-        //Bundle bun =  new Bundle();
-        // bun.putString("key",key);
-        //intent.putExtras(bun);
+        intent.putExtra("Pos",position);
         startActivity(intent);
         Toast.makeText(getActivity(),"Position is " + position, Toast.LENGTH_LONG).show();
     }
