@@ -89,7 +89,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             goMainScreen();
         }else {
             Toast.makeText(this, "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show();
-
         }
 
     }
