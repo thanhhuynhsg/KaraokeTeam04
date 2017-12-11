@@ -11,6 +11,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
@@ -39,14 +40,14 @@ import java.io.InputStream;
 import java.util.List;
 
 public class CreateKaraoke extends AppCompatActivity {
-    Button chonhinh, luu, huy;
+    Button chonhinh, luu, huy,chup;
     EditText ten,diachi, sdt, gia , mota;
     ImageView hinhdaidien;
     DatabaseReference mData;
     String Karaoke_id;
     float lat,lon;
 
-  //  final int REQUEST_TAKE_PHOTO = 123;
+    final int REQUEST_TAKE_PHOTO = 123;
     final int REQUEST_CHOOSE_PHOTO = 321;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class CreateKaraoke extends AppCompatActivity {
         gia = (EditText)findViewById(R.id.edit_price);
         mota = (EditText)findViewById(R.id.edit_description);
         hinhdaidien = (ImageView)findViewById(R.id.img_avatar);
+        chup = (Button)findViewById(R.id.btn_takephoto);
         mData = FirebaseDatabase.getInstance().getReference();
         // chọn hình
         chonhinh.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +74,12 @@ public class CreateKaraoke extends AppCompatActivity {
                 choosePhoto();
             }
         });
-
+        chup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePhoto();
+            }
+        });
         luu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +94,6 @@ public class CreateKaraoke extends AppCompatActivity {
                 finish();
             }
         });
-
     }
     private  class  GetCoordinates extends AsyncTask<String,Void,String> {
         ProgressDialog dialog = new ProgressDialog(CreateKaraoke.this);
@@ -164,8 +170,16 @@ public class CreateKaraoke extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(intent,REQUEST_CHOOSE_PHOTO);
     }
+    private  void takePhoto(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,REQUEST_TAKE_PHOTO);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode ==REQUEST_TAKE_PHOTO && resultCode==RESULT_OK){
+            Bitmap photo = (Bitmap)data.getExtras().get("data");
+            hinhdaidien.setImageBitmap(photo);
+        }
         if(resultCode == RESULT_OK){
             if(requestCode == REQUEST_CHOOSE_PHOTO){
                 try {

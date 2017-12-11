@@ -11,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.team04_final_project.CreateKaraoke;
+import com.example.team04_final_project.IShowDetail;
 import com.example.team04_final_project.R;
 import com.example.team04_final_project.SeeDetails;
 import com.example.team04_final_project.adapter.KaraokeAdapter;
@@ -36,13 +38,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBack{
+public class KaraokeFragment extends Fragment implements IShowDetail{
     private RecyclerView rcvListKaraoke;
     private KaraokeAdapter karaokeAdapter;
     private List<Karaoke> karaokeList;
     private Karaoke karaokeSelection;
     DatabaseReference mData;
-
+    public static String mName,mAddress,mPrice,mPhone,mDescription,mLogo;
+    public static Float mLat,mLon;
 
     public KaraokeFragment() {
         // Required empty public constructor
@@ -64,7 +67,7 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), layoutManager.getOrientation());
         rcvListKaraoke.addItemDecoration(dividerItemDecoration);
 
-        karaokeAdapter = new KaraokeAdapter(karaokeList, getActivity(), this);
+        karaokeAdapter = new KaraokeAdapter(karaokeList,this);
         rcvListKaraoke.setAdapter(karaokeAdapter);
 
         mData = FirebaseDatabase.getInstance().getReference();
@@ -157,11 +160,25 @@ public class KaraokeFragment extends Fragment implements KaraokeAdapter.OnCallBa
         startActivity(intent);
     }
     @Override
-    public void onItemClicked(int position) {
-       // karaokeSelection.getmId();
-        Intent intent = new Intent(getActivity(),SeeDetails.class);
-        intent.putExtra("Pos",position);
-        startActivity(intent);
-        Toast.makeText(getActivity(),"Position is " + position, Toast.LENGTH_LONG).show();
+    public void onItemClick(int position) {
+        mName = karaokeAdapter.getKaraokeList().get(position).getmName();
+        mAddress = karaokeAdapter.getKaraokeList().get(position).getmAddress();
+        mPrice = karaokeAdapter.getKaraokeList().get(position).getmPrice();
+        mPhone = karaokeAdapter.getKaraokeList().get(position).getmPhone();
+        mDescription = karaokeAdapter.getKaraokeList().get(position).getmDescription();
+        mLat = karaokeAdapter.getKaraokeList().get(position).getmLat();
+        mLon = karaokeAdapter.getKaraokeList().get(position).getmLon();
+        mLogo =  karaokeAdapter.getKaraokeList().get(position).getmLogo();
+        Intent intent = new Intent(getActivity().getBaseContext(),SeeDetails.class);
+        intent.putExtra("NAME",mName);
+        intent.putExtra("ADDRESS",mAddress);
+        intent.putExtra("PRICE",mPrice);
+        intent.putExtra("PHONE",mPhone);
+        intent.putExtra("DESC",mDescription);
+        intent.putExtra("LOGO",mLogo);
+        intent.putExtra("LAT",mLat);
+        intent.putExtra("LON",mLon);
+        getActivity().startActivity(intent);
+
     }
 }
