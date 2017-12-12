@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Karaoke_Team04_VLU.iml" filepath="$PROJECT_DIR$/Karaoke_Team04_VLU.iml" />
+      <module fileurl="file://C:\Users\thand\Documents\Karaoke_Team04_VLU\Karaoke_Team04_VLU.iml" filepath="C:\Users\thand\Documents\Karaoke_Team04_VLU\Karaoke_Team04_VLU.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\thand\Documents\Karaoke_Team04_VLU\app\app.iml" filepath="C:\Users\thand\Documents\Karaoke_Team04_VLU\app\app.iml" />
     </modules>
   </component>
 </project>
