@@ -109,7 +109,7 @@
 
                         <Button
                             android:id="@+id/btn_ChiDuong"
-                            android:layout_width="wrap_content"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="5dp"
@@ -177,48 +177,79 @@
 
                         <Button
                             android:id="@+id/btn_RatinngBar"
-                            android:layout_width="100dp"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:text="Đánh giá" />
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bình luận"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="15dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView8"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp">
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:text="Linh Than"
-                            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
 
-                        <RatingBar
-                            android:id="@+id/ratingBar2"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:clickable="false"
-                            android:isIndicator="true"
-                            android:numStars="5"
-                            android:rating="4"
-                            android:stepSize="1.0" />
+                            <ImageView
+                                android:id="@+id/iv_Avatar"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginTop="5dp"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/mic" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/textView8"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:text="Linh Than"
+                                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/textView12"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Quán đẹp, giá hợp lý và phục tốt"
-                            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
-                    </LinearLayout>
+                                <RatingBar
+                                    android:id="@+id/ratingBar2"
+                                    style="?android:attr/ratingBarStyleSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:clickable="false"
+                                    android:isIndicator="true"
+                                    android:numStars="5"
+                                    android:rating="4"
+                                    android:stepSize="1.0" />
+
+                                <TextView
+                                    android:id="@+id/textView12"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Quán đẹp, giá hợp lý và phục tốt"
+                                    android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
 
                 </LinearLayout>
 
