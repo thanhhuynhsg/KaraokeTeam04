@@ -41,6 +41,10 @@ import org.json.JSONObject;
 
 import com.example.team04_final_project.Direction.AsyncTaskDrawDirection;
 
+/**
+ * Created by Thanh Huynh on 22/11/2017.
+ */
+
 public class DirectionActivity extends FragmentActivity implements OnMapReadyCallback {
 
     GoogleMap mMap;

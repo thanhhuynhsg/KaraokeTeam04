@@ -23,6 +23,10 @@ import com.google.android.gms.maps.model.LatLng;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * Created by Thanh Huynh on 2/12/2017.
+ */
+
 public class GoogleMapsDirection {
 
     public GoogleMapsDirection() { }

@@ -11,6 +11,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * Created by Thanh Huynh on 2/12/2017.
+ */
 
 public class AsyncTaskDrawDirection extends AsyncTask<Map<String, String>, Object, ArrayList<LatLng>> {
     public static final String USER_CURRENT_LAT = "user_current_lat";
