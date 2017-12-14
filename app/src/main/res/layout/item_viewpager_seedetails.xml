@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/iv_ViewPagerSD"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/firework" />

@@ -6,6 +6,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
@@ -19,8 +22,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team04_final_project.Fragment.GPSFragment;
+import com.example.team04_final_project.adapter.ReviewAndCommentAdapter;
 import com.example.team04_final_project.adapter.SeeDetailsVPAdapter;
 import com.example.team04_final_project.data.Karaoke;
+import com.example.team04_final_project.data.ReviewAndComment;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
@@ -30,8 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.example.team04_final_project.Fragment.GPSFragment;
 
 
 public class SeeDetails extends AppCompatActivity {
@@ -45,7 +49,9 @@ public class SeeDetails extends AppCompatActivity {
     String mName,mAddress,mPrice,mPhone,mDesc,mLogo;
     Float mLat,mLon;
     private List<Karaoke> karaokeList;
-
+    private RecyclerView rcReviewAndComment;
+    private List<ReviewAndComment> reviewAndCommentList;
+    private ReviewAndCommentAdapter reviewAndCommentAdapter;
     GPSFragment gps;
 
     @Override
@@ -64,6 +70,22 @@ public class SeeDetails extends AppCompatActivity {
         TextView price = (TextView)findViewById(R.id.txt_price);
         TextView phone = (TextView)findViewById(R.id.txt_phone);
         TextView description = (TextView)findViewById(R.id.txt_description);
+
+        //List Comment
+        rcReviewAndComment = (RecyclerView) findViewById(R.id.rcv_ListComment);
+        ///List Comment
+        reviewAndCommentList = new ArrayList<ReviewAndComment>();
+
+        rcReviewAndComment.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rcReviewAndComment.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, layoutManager.getOrientation());
+        rcReviewAndComment.addItemDecoration(dividerItemDecoration);
+        reviewAndCommentAdapter = new ReviewAndCommentAdapter(reviewAndCommentList, this);
+        rcReviewAndComment.setAdapter(reviewAndCommentAdapter);
+
+
+
 
         //Show data
         karaokeList = new ArrayList<Karaoke>();
