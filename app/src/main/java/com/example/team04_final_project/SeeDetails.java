@@ -46,13 +46,12 @@ public class SeeDetails extends AppCompatActivity {
     private ImageView[] dots;
     private Button btnRatingBar, btnChiDuong;
     private GoogleSignInClient mGoogleSignInClient;
-    String mName,mAddress,mPrice,mPhone,mDesc,mLogo;
+    public String mName,mAddress,mPrice,mPhone,mDesc,mLogo;
     Float mLat,mLon;
     private List<Karaoke> karaokeList;
     private RecyclerView rcReviewAndComment;
     private List<ReviewAndComment> reviewAndCommentList;
     private ReviewAndCommentAdapter reviewAndCommentAdapter;
-    GPSFragment gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
