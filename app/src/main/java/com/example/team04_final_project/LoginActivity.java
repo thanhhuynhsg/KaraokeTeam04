@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (requestCode ==SIGN_IN_CODE){
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+            Log.d("abc","SuccessRequestCode");
         }
     }
 
