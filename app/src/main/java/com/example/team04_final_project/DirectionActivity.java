@@ -1,5 +1,6 @@
 package com.example.team04_final_project;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import org.apache.http.HttpEntity;
@@ -53,11 +55,19 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
     private Button bNavigation;
     private Polyline newPolyline;
     private double startLat, startLng, endLat, endLng;
+    private  String mAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_direction);
+
+
+        Intent intent = getIntent();
+        mAddress= intent.getStringExtra("ADDRESS");
+        Toast.makeText(this,mAddress,Toast.LENGTH_LONG).show();
+
+
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 

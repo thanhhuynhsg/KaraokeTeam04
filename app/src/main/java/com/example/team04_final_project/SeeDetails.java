@@ -64,8 +64,8 @@ public class SeeDetails extends AppCompatActivity {
 
         setContentView(R.layout.activity_see_details);
 
-        TextView name = (TextView)findViewById(R.id.txt_name);
-        TextView address = (TextView)findViewById(R.id.txt_address);
+        final TextView name = (TextView)findViewById(R.id.txt_name);
+        final TextView address = (TextView)findViewById(R.id.txt_address);
         TextView price = (TextView)findViewById(R.id.txt_price);
         TextView phone = (TextView)findViewById(R.id.txt_phone);
         TextView description = (TextView)findViewById(R.id.txt_description);
@@ -156,6 +156,8 @@ public class SeeDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SeeDetails.this, DirectionActivity.class);
+                String dAddress = address.getText().toString();
+                intent.putExtra("ADDRESS",dAddress);
                 startActivity(intent);
             }
         });
