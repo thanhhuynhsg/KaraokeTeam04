@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -56,20 +57,21 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
     private Polyline newPolyline;
     private double startLat, startLng, endLat, endLng;
     private  String mAddress;
+    private TextView thoigian, khoangcach;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_direction);
 
-
         Intent intent = getIntent();
         mAddress= intent.getStringExtra("ADDRESS");
-        Toast.makeText(this,mAddress,Toast.LENGTH_LONG).show();
-
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        thoigian = (TextView)findViewById(R.id.tvDuration);
+        khoangcach=(TextView)findViewById(R.id.tvDistance);
 
         bNavigation = (Button) findViewById(R.id.btGo);
         bNavigation.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +80,7 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
                 class Sess extends AsyncTask<Void, Integer, Long> {
                     protected Long doInBackground(Void... arg0) {
                         try {
-                            EditText etDestination = (EditText) findViewById(R.id.etDestination);
-                            String address = etDestination.getText().toString();
-                            JSONObject jsonObject = getLocationInfo(address);
+                            JSONObject jsonObject = getLocationInfo(mAddress);
                             endLat = ((JSONArray) jsonObject.get("results")).getJSONObject(0)
                                     .getJSONObject("geometry").getJSONObject("location")
                                     .getDouble("lat");
@@ -95,11 +95,14 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
 
                     protected void onPostExecute(Long result) {
                         findDirections(startLat, startLng, endLat, endLng, "driving");
+                       thoigian.setText(AsyncTaskDrawDirection.getDuration);
+                       khoangcach.setText(AsyncTaskDrawDirection.getDistance);
                     }
                 }
                 new Sess().execute();
             }
         });
+
     }
 
     @Override

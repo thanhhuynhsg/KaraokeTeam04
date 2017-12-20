@@ -21,6 +21,7 @@ public class AsyncTaskDrawDirection extends AsyncTask<Map<String, String>, Objec
     public static final String DESTINATION_LAT = "destination_lat";
     public static final String DESTINATION_LONG = "destination_long";
     public static final String DIRECTIONS_MODE = "directions_mode";
+    public static String getDuration="" , getDistance="";
     private DirectionActivity activity;
     private Exception exception;
     private ProgressDialog progressDialog;
@@ -55,6 +56,8 @@ public class AsyncTaskDrawDirection extends AsyncTask<Map<String, String>, Objec
             GoogleMapsDirection md = new GoogleMapsDirection();
             Document doc = md.getDocument(fromPosition, toPosition, paramMap.get(DIRECTIONS_MODE));
             ArrayList<LatLng> directionPoints = md.getDirection(doc);
+            getDuration = md.getDurationText(doc);
+            getDistance = md.getDurationText(doc);
 
             for (int i = 0; i < directionPoints.size(); i++) {
                 Log.d("TBT", directionPoints.get(i).toString());

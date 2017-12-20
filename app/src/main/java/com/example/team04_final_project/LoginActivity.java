@@ -74,6 +74,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             }
         };
+
+
         signInButton=(SignInButton) findViewById(R.id.btn_sign_in);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +171,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Toast.makeText(this,"lỗi Google Play Service", Toast.LENGTH_SHORT).show();
     }
 
-    private void goMainScreen() {
+    public void goMainScreen() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

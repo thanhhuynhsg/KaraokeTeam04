@@ -31,6 +31,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +54,9 @@ public class SeeDetails extends AppCompatActivity {
     private RecyclerView rcReviewAndComment;
     private List<ReviewAndComment> reviewAndCommentList;
     private ReviewAndCommentAdapter reviewAndCommentAdapter;
-
+    //Thông tin của người đăng nhập
+    private FirebaseAuth mAuth;
+    private String namedn, emaildn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +74,15 @@ public class SeeDetails extends AppCompatActivity {
         TextView phone = (TextView)findViewById(R.id.txt_phone);
         TextView description = (TextView)findViewById(R.id.txt_description);
 
+        //Lấy thông tin người đăng nhập
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+             namedn = user.getDisplayName();
+             emaildn = user.getEmail();
+        }
+
         //List Comment
         rcReviewAndComment = (RecyclerView) findViewById(R.id.rcv_ListComment);
         ///List Comment
@@ -82,8 +95,6 @@ public class SeeDetails extends AppCompatActivity {
         rcReviewAndComment.addItemDecoration(dividerItemDecoration);
         reviewAndCommentAdapter = new ReviewAndCommentAdapter(reviewAndCommentList, this);
         rcReviewAndComment.setAdapter(reviewAndCommentAdapter);
-
-
 
 
         //Show data
