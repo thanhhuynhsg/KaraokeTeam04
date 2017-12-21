@@ -1,6 +1,7 @@
 package com.example.team04_final_project;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -26,6 +27,7 @@ import com.example.team04_final_project.Fragment.GPSFragment;
 import com.example.team04_final_project.adapter.ReviewAndCommentAdapter;
 import com.example.team04_final_project.adapter.SeeDetailsVPAdapter;
 import com.example.team04_final_project.data.Karaoke;
+import com.example.team04_final_project.data.Rating_Comment;
 import com.example.team04_final_project.data.ReviewAndComment;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -33,11 +35,19 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 
 public class SeeDetails extends AppCompatActivity {
@@ -47,24 +57,25 @@ public class SeeDetails extends AppCompatActivity {
     private int dotscount;
     private ImageView[] dots;
     private Button btnRatingBar, btnChiDuong;
+    private RatingBar ratingBar;
     private GoogleSignInClient mGoogleSignInClient;
-    public String mName,mAddress,mPrice,mPhone,mDesc,mLogo;
+    public String mID,mName,mAddress,mPrice,mPhone,mDesc,mLogo;
     Float mLat,mLon;
     private List<Karaoke> karaokeList;
     private RecyclerView rcReviewAndComment;
-    private List<ReviewAndComment> reviewAndCommentList;
+    private List<Rating_Comment> reviewAndCommentList;
     private ReviewAndCommentAdapter reviewAndCommentAdapter;
     //Thông tin của người đăng nhập
     private FirebaseAuth mAuth;
-    private String namedn, emaildn;
+    private LoginActivity loginActivity;
+    private String iddn,namedn,avatadn;
+    private DatabaseReference mData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-//        FacebookSdk.sdkInitialize(getApplicationContext());
-//        AppEventsLogger.activateApp(this);
 
         setContentView(R.layout.activity_see_details);
 
@@ -74,19 +85,22 @@ public class SeeDetails extends AppCompatActivity {
         TextView phone = (TextView)findViewById(R.id.txt_phone);
         TextView description = (TextView)findViewById(R.id.txt_description);
 
+        mData = FirebaseDatabase.getInstance().getReference();
         //Lấy thông tin người đăng nhập
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // Name, email address, and profile photo Url
+             iddn = user.getUid();
              namedn = user.getDisplayName();
-             emaildn = user.getEmail();
+             avatadn = user.getPhotoUrl().toString();
+
         }
 
         //List Comment
         rcReviewAndComment = (RecyclerView) findViewById(R.id.rcv_ListComment);
         ///List Comment
-        reviewAndCommentList = new ArrayList<ReviewAndComment>();
+        reviewAndCommentList = new ArrayList<Rating_Comment>();
 
         rcReviewAndComment.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -96,10 +110,46 @@ public class SeeDetails extends AppCompatActivity {
         reviewAndCommentAdapter = new ReviewAndCommentAdapter(reviewAndCommentList, this);
         rcReviewAndComment.setAdapter(reviewAndCommentAdapter);
 
+//        Rating_Comment raco = dataSnapshot.getValue(Rating_Comment.class);
+//        reviewAndCommentList.add(new Rating_Comment(raco.getIdKaraoke(),raco.getIdUsser(),raco.getuRating(),raco.getuComment(),raco.getuName(),raco.getuAvata()));
+//        reviewAndCommentAdapter.notifyDataSetChanged();
+        mData = FirebaseDatabase.getInstance().getReference();
+       // final Query query = mData.child("Rating_Comment").orderByChild("idKaraoke").equalTo(mID);
+        mData.child("Rating_Comment").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Rating_Comment raco = dataSnapshot.getValue(Rating_Comment.class);
+                reviewAndCommentList.add(new Rating_Comment(raco.getIdKaraoke(),raco.getIdUsser(),raco.getuRating(),raco.getuComment(),raco.getuName(),raco.getuAvata()));
+                reviewAndCommentAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //Show data
         karaokeList = new ArrayList<Karaoke>();
+
+        //get dữ liêu từ KaraokeFragment
         Intent intent = getIntent();
+        mID = intent.getStringExtra("ID");
         mName= intent.getStringExtra("NAME");
         mAddress= intent.getStringExtra("ADDRESS");
         mPrice= intent.getStringExtra("PRICE");
@@ -175,49 +225,15 @@ public class SeeDetails extends AppCompatActivity {
         btnRatingBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if(login == true){
-                    final AlertDialog.Builder mbuilder = new AlertDialog.Builder(SeeDetails.this);
-                    View mView = getLayoutInflater().inflate(R.layout.login_layout, null);
-                   // LoginButton btnLogin_Face = (LoginButton) mView.findViewById(R.id.login_Facebook);
-                    //LoginButton btnGmail = (LoginButton) mView.findViewById(R.id.loginGmail);
-                    //Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
-                    ImageButton btnClose = (ImageButton) mView.findViewById(R.id.btnClose);
-                    mbuilder.setView(mView);
-                    final AlertDialog dialog = mbuilder.create();
-                    dialog.show();
-//                    btnLogin_Face.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Toast.makeText(SeeDetails.this, "Login Facebook!", Toast.LENGTH_LONG).show();
-//                            SeeDetails.this.onClick();
-//                            dialog.cancel();
-//                        }
-//                    });
 
-                    btnClose.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        dialog.cancel();
-                    }
-                });
-                    /*btnGmail.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(SeeDetails.this, "Login Gmail!", Toast.LENGTH_LONG).show();
-                            SeeDetails.this.onClick();
-                            dialog.cancel();
-                        }
-                    });*/
-                    /*btnCancelADSD.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });*/
-                //}
-                //else{
-                //    SeeDetails.this.onClick();
-                //}
+                if(mAuth.getCurrentUser() != null){
+                    SeeDetails.this.onClick();
+                }
+                else {
+                    Toast.makeText(SeeDetails.this, "Vui lòng đăng nhập!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(SeeDetails.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         name.setText(mName);
@@ -245,8 +261,19 @@ public class SeeDetails extends AppCompatActivity {
         btnSubmitRB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String id = UUID.randomUUID().toString();
                 String rating = String.valueOf(ratingBar.getRating());
-                Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
+                Rating_Comment raco = new Rating_Comment(mID,iddn,rating,etCommentRB.getText().toString(),namedn,avatadn);
+                mData.child("Rating_Comment").child(id).setValue(raco, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if(databaseError == null){
+                            Toast.makeText(SeeDetails.this,"Gửi thành công",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(SeeDetails.this,"Gửi thất bại, Vui lòng thử lại!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 dialog_rating.cancel();
             }
         });

@@ -174,13 +174,18 @@
                 android:textColor="@android:color/background_dark"
                 android:textSize="24sp"
                 android:textStyle="bold" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rcv_ListComment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:transitionGroup="true"/>
 
-
+            </FrameLayout>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

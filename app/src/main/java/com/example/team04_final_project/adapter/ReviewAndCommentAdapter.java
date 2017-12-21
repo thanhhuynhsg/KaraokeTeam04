@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.team04_final_project.R;
+import com.example.team04_final_project.data.Rating_Comment;
 import com.example.team04_final_project.data.ReviewAndComment;
 
 import java.util.List;
@@ -19,17 +22,17 @@ import java.util.List;
  */
 
 public class ReviewAndCommentAdapter extends RecyclerView.Adapter<ReviewAndCommentAdapter.ViewHolder>{
-    private List<ReviewAndComment> reviewAndCommentList;
+    private List<Rating_Comment> reviewAndCommentList;
     private Context context;
-    public List<ReviewAndComment> getReviewAndCommentList() {
+    public List<Rating_Comment> getReviewAndCommentList() {
         return reviewAndCommentList;
     }
 
-    public void setReviewAndCommentList(List<ReviewAndComment> reviewAndCommentList) {
+    public void setReviewAndCommentList(List<Rating_Comment> reviewAndCommentList) {
         this.reviewAndCommentList = reviewAndCommentList;
     }
 
-    public ReviewAndCommentAdapter(List<ReviewAndComment> reviewAndCommentList, Context context) {
+    public ReviewAndCommentAdapter(List<Rating_Comment> reviewAndCommentList, Context context) {
         this.reviewAndCommentList = reviewAndCommentList;
         this.context = context;
     }
@@ -39,14 +42,16 @@ public class ReviewAndCommentAdapter extends RecyclerView.Adapter<ReviewAndComme
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review_and_comment, parent, false);
         return new ReviewAndCommentAdapter.ViewHolder(itemView);
     }
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ReviewAndComment reviewAndComment = reviewAndCommentList.get(position);
-        holder.ivAvatar.setImageResource(reviewAndComment.getmAvatar());
-        holder.tvContentRAC.setText(reviewAndComment.getmName());
-        holder.rbReviewAndComment.setRating(reviewAndComment.getmRateing());
-        holder.tvContentRAC.setText(reviewAndComment.getmContent());
+        Rating_Comment reviewAndComment = reviewAndCommentList.get(position);
+        String img_url = reviewAndComment.getuAvata();
+        Glide.with(context).load(img_url).into(holder.ivAvatar);
+       // holder.ivAvatar.setImageResource(reviewAndComment.getmA());
+        holder.tvNameRAC.setText(reviewAndComment.getuName());
+        Float rating = Float.parseFloat(reviewAndComment.getuRating());
+        holder.rbReviewAndComment.setRating(rating);
+        holder.tvContentRAC.setText(reviewAndComment.getuComment());
     }
 
     @Override
