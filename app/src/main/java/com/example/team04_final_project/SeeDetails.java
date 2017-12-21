@@ -63,8 +63,8 @@ public class SeeDetails extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+//        AppEventsLogger.activateApp(this);
 
         setContentView(R.layout.activity_see_details);
 
@@ -178,21 +178,21 @@ public class SeeDetails extends AppCompatActivity {
                 //if(login == true){
                     final AlertDialog.Builder mbuilder = new AlertDialog.Builder(SeeDetails.this);
                     View mView = getLayoutInflater().inflate(R.layout.login_layout, null);
-                    LoginButton btnLogin_Face = (LoginButton) mView.findViewById(R.id.login_Facebook);
+                   // LoginButton btnLogin_Face = (LoginButton) mView.findViewById(R.id.login_Facebook);
                     //LoginButton btnGmail = (LoginButton) mView.findViewById(R.id.loginGmail);
                     //Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
                     ImageButton btnClose = (ImageButton) mView.findViewById(R.id.btnClose);
                     mbuilder.setView(mView);
                     final AlertDialog dialog = mbuilder.create();
                     dialog.show();
-                    btnLogin_Face.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(SeeDetails.this, "Login Facebook!", Toast.LENGTH_LONG).show();
-                            SeeDetails.this.onClick();
-                            dialog.cancel();
-                        }
-                    });
+//                    btnLogin_Face.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Toast.makeText(SeeDetails.this, "Login Facebook!", Toast.LENGTH_LONG).show();
+//                            SeeDetails.this.onClick();
+//                            dialog.cancel();
+//                        }
+//                    });
 
                     btnClose.setOnClickListener(new View.OnClickListener(){
                     @Override

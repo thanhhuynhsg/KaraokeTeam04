@@ -66,6 +66,7 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
     private List<LatLngKaraoke> karaokeList;
     DatabaseReference mData;
     CircleOptions circleOptions;
+    LatLng myLatLng = new LatLng(10.750040054321289, 106.68543243408203);
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,17 +86,17 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
             mapFragment.getMapAsync(this);
         }
     }
-    public  void addMarker(GoogleMap mMap, List<LatLngKaraoke> list){
+    public  void addMarker(GoogleMap mMap, List<LatLngKaraoke> list, double radius){
         int i = 0;
         for(LatLngKaraoke latlng : list){
             i++;
-            LatLng mLatLng = new LatLng(latlng.getLat(),latlng.getLng());
-            Double kc = CalculationByDistance(mLatLng,mLatLng) * 1000;
+            LatLng mLatlng = new LatLng(latlng.getLat(),latlng.getLng());
+            Double kc = CalculationByDistance(myLatLng,mLatlng) * 1000;
             String title = latlng.getTitle().toString();
             String snippet = latlng.getSnippet().toString();
             // Những địa điểm trong vòng 5km (mặc định từ chỗ đang đứng)
-            if(kc < 5000) {
-                Marker marker = mMap.addMarker(new MarkerOptions().position(mLatLng).title(title).snippet(snippet).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon)));
+            if(kc < radius) {
+                Marker marker = mMap.addMarker(new MarkerOptions().position(mLatlng).title(title).snippet(snippet).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon)));
             }
         }
     }
@@ -130,20 +131,21 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
         }
-        LatLng myhome = new LatLng(10.8398677, 106.5998327);
+
         mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.location))
                 .anchor(0.0f, 1.0f)
-                .position(myhome)
-                .title("Marker in myHome")
-                .snippet("Welcome to myHome")
+                .position(myLatLng)
+                .title("Bạn đang đứng tại đây")
+                .snippet("Chúc bạn có những giây phút thư giản vui vẻ nhất")
         );
-        circleOptions = new CircleOptions().center(myhome).radius(5000).strokeWidth(2).strokeColor(Color.BLUE).fillColor(Color.parseColor("#500084d3"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myhome, 18));
+        circleOptions = new CircleOptions().center(myLatLng).radius(5000).strokeWidth(2).strokeColor(Color.BLUE).fillColor(Color.parseColor("#500084d3"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 17));
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(18),2000,null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17),2000,null);
         mMap.addCircle(circleOptions);
         addLatLngKaraoke();
+
 
     }
 
@@ -155,9 +157,8 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Karaoke kara = dataSnapshot.getValue(Karaoke.class);
                 karaokeList.add(new LatLngKaraoke(kara.getmLat(),kara.getmLon(),kara.getmName(),kara.getmAddress()));
-                addMarker(mMap,karaokeList);
+                addMarker(mMap,karaokeList,5000);
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 

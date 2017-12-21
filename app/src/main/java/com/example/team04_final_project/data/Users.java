@@ -5,19 +5,25 @@ package com.example.team04_final_project.data;
  */
 
 public class Users {
+    private String uId;
     private String uName;
     private String uEmail;
-    private String mAvata;
+    private String uAvata;
 
     public Users() {
 
     }
 
-    public Users(String uName, String uEmail, String mAvata) {
+    public Users(String uId, String uName, String uEmail, String uAvata) {
+        this.uId = uId;
         this.uName = uName;
         this.uEmail = uEmail;
-        this.mAvata = mAvata;
+        this.uAvata = uAvata;
     }
+
+    public String getuId() {return uId;}
+
+    public void setuId(String uId) {this.uId = uId;}
 
     public String getuName() {return uName;}
 
@@ -27,7 +33,7 @@ public class Users {
 
     public void setuEmail(String uEmail) {this.uEmail = uEmail;}
 
-    public String getmAvata() {return mAvata;}
+    public String getuAvata() {return uAvata;}
 
-    public void setmAvata(String mAvata) {this.mAvata = mAvata;}
+    public void setuAvata(String mAvata) {this.uAvata = uAvata;}
 }
