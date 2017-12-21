@@ -45,7 +45,7 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
     private KaraokeAdapter karaokeAdapter;
     private List<Karaoke> karaokeList;
     private DatabaseReference mData;
-    public static String mName,mAddress,mPrice,mPhone,mDescription,mLogo;
+    public static String mID,mName,mAddress,mPrice,mPhone,mDescription,mLogo;
     public static Float mLat,mLon;
     private FirebaseAuth mAuth;
     private LoginActivity loginActivity;
@@ -180,6 +180,7 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
     }
     @Override
     public void onItemClick(int position) {
+        mID = karaokeAdapter.getKaraokeList().get(position).getmId();
         mName = karaokeAdapter.getKaraokeList().get(position).getmName();
         mAddress = karaokeAdapter.getKaraokeList().get(position).getmAddress();
         mPrice = karaokeAdapter.getKaraokeList().get(position).getmPrice();
@@ -189,6 +190,7 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
         mLon = karaokeAdapter.getKaraokeList().get(position).getmLon();
         mLogo =  karaokeAdapter.getKaraokeList().get(position).getmLogo();
         Intent intent = new Intent(getActivity().getBaseContext(),SeeDetails.class);
+        intent.putExtra("ID",mID);
         intent.putExtra("NAME",mName);
         intent.putExtra("ADDRESS",mAddress);
         intent.putExtra("PRICE",mPrice);

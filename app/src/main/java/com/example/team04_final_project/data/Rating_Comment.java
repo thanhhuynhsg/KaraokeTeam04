@@ -8,18 +8,21 @@ public class Rating_Comment {
 
     private String idKaraoke;
     private String idUsser;
-    private int uRating;
+    private String uRating;
     private String uComment;
-
+    private String uName;
+    private String uAvata;
     public  Rating_Comment(){
 
     }
 
-    public Rating_Comment(String idKaraoke, String idUsser, int uRating, String uComment) {
+    public Rating_Comment(String idKaraoke, String idUsser, String uRating, String uComment, String uName,String uAvata) {
         this.idKaraoke = idKaraoke;
         this.idUsser = idUsser;
         this.uRating = uRating;
         this.uComment = uComment;
+        this.uName = uName;
+        this.uAvata = uAvata;
     }
 
     public String getIdKaraoke() {return idKaraoke;}
@@ -30,11 +33,19 @@ public class Rating_Comment {
 
     public void setIdUsser(String idUsser) {this.idUsser = idUsser;}
 
-    public int getuRating() {return uRating;}
+    public String getuRating() {return uRating;}
 
-    public void setuRating(int uRating) {this.uRating = uRating;}
+    public void setuRating(String uRating) {this.uRating = uRating;}
 
     public String getuComment() {return uComment;}
 
     public void setuComment(String uComment) {this.uComment = uComment;}
+
+    public String getuName() {return uName;}
+
+    public void setuName(String uName) {this.uName = uName;}
+
+    public String getuAvata() {return uAvata;}
+
+    public void setuAvata(String uAvata) {this.uAvata = uAvata;}
 }

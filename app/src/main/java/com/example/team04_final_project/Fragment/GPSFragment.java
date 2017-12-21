@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -25,11 +26,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.team04_final_project.GPSTracker;
 import com.example.team04_final_project.R;
 import com.example.team04_final_project.data.Karaoke;
 import com.example.team04_final_project.data.LatLngKaraoke;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -56,27 +62,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
  *  Create by Thanh Huynh
  */
 public class GPSFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
+    private GPSTracker gpsTracker;
+    private Location mLocation;
     private SupportMapFragment mapFragment;
     private List<LatLngKaraoke> karaokeList;
     DatabaseReference mData;
     CircleOptions circleOptions;
-    LatLng myLatLng = new LatLng(10.750040054321289, 106.68543243408203);
+    private double latitude,longtitude;
+    LatLng myLatLng ;
+//            = new LatLng(10.750040054321289, 106.68543243408203);
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gps, container, false);
+       return inflater.inflate(R.layout.fragment_gps, container, false);
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        gpsTracker = new GPSTracker(getActivity());
+        mLocation = gpsTracker.getLocation();
 
+        latitude = mLocation.getLatitude();
+        longtitude = mLocation.getLongitude();
+        Toast.makeText(getActivity(),""+latitude+longtitude,Toast.LENGTH_LONG).show();
         FragmentManager fm = getChildFragmentManager();
         mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
         if (mapFragment == null) {
@@ -127,11 +142,16 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if(ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+        if ((ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
         }
 
+//        if(ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+//            mMap.setMyLocationEnabled(true);
+//            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+//        }
+        myLatLng = new LatLng(latitude,longtitude);
         mMap.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.location))
                 .anchor(0.0f, 1.0f)

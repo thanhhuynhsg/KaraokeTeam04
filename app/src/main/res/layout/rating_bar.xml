@@ -14,7 +14,8 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:stepSize="1"/>
 
     <EditText
         android:id="@+id/et_CommentSD"
