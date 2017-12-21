@@ -20,11 +20,13 @@ import android.widget.Toast;
 
 import com.example.team04_final_project.CreateKaraoke;
 import com.example.team04_final_project.IShowDetail;
+import com.example.team04_final_project.LoginActivity;
 import com.example.team04_final_project.R;
 import com.example.team04_final_project.SeeDetails;
 import com.example.team04_final_project.adapter.KaraokeAdapter;
 import com.example.team04_final_project.data.Karaoke;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,11 +44,11 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
     private RecyclerView rcvListKaraoke;
     private KaraokeAdapter karaokeAdapter;
     private List<Karaoke> karaokeList;
-    private Karaoke karaokeSelection;
-    DatabaseReference mData;
+    private DatabaseReference mData;
     public static String mName,mAddress,mPrice,mPhone,mDescription,mLogo;
     public static Float mLat,mLon;
-
+    private FirebaseAuth mAuth;
+    private LoginActivity loginActivity;
     public KaraokeFragment() {
         // Required empty public constructor
     }
@@ -57,6 +59,8 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_karaoke, container, false);
+        mAuth = FirebaseAuth.getInstance();
+
         karaokeList = new ArrayList<Karaoke>();
         rcvListKaraoke = (RecyclerView) view.findViewById(R.id.rcv_ListKaraoke);
         rcvListKaraoke.setHasFixedSize(true);
@@ -107,24 +111,44 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
         fabCreateKaraoke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if(login == true){
-                    final AlertDialog.Builder mbuilder = new AlertDialog.Builder(getActivity());
-                    View mView = getLayoutInflater().inflate(R.layout.login_layout, null);
-                    LoginButton btnLogin_Face = (LoginButton) mView.findViewById(R.id.login_Facebook);
-                    //LoginButton btnGmail = (LoginButton) mView.findViewById(R.id.loginGmail);
-                    //Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
-                    ImageButton btnClose = (ImageButton) mView.findViewById(R.id.btnClose);
-                    mbuilder.setView(mView);
-                    final AlertDialog dialog = mbuilder.create();
-                    dialog.show();
-                    btnLogin_Face.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(getActivity(), "Login Facebook!", Toast.LENGTH_LONG).show();
-                            openCreateKaraoke();
-                            dialog.cancel();
-                        }
-                    });
+                    if (mAuth.getCurrentUser() != null) {
+                        openCreateKaraoke();
+                    }else {
+                        Toast.makeText(getActivity(), "Vui lòng đăng nhập!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+//                        final AlertDialog.Builder mbuilder = new AlertDialog.Builder(getActivity());
+//                        View mView = getLayoutInflater().inflate(R.layout.login_layout, null);
+//                        LoginButton btnGmail = (LoginButton) mView.findViewById(R.id.loginGmail);
+//                        //Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
+//                        ImageButton btnClose = (ImageButton) mView.findViewById(R.id.btnClose);
+//                        mbuilder.setView(mView);
+//                        final AlertDialog dialog = mbuilder.create();
+//                        dialog.show();
+//                        btnGmail.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+////                                Toast.makeText(getActivity(), "Login Gmail!", Toast.LENGTH_LONG).show();
+////                                openCreateKaraoke();
+//                               // dialog.cancel();
+//                            }
+//                        });
+//
+//                        btnClose.setOnClickListener(new View.OnClickListener(){
+//                            @Override
+//                            public void onClick(View view) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//                    btnLogin_Face.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Toast.makeText(getActivity(), "Login Facebook!", Toast.LENGTH_LONG).show();
+//                            openCreateKaraoke();
+//                            dialog.cancel();
+//                        }
+//                    });
                         /*btnGmail.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -133,12 +157,7 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
                                 dialog.cancel();
                             }
                         });*/
-                    btnClose.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View view) {
-                            dialog.cancel();
-                        }
-                    });
+
                     /*btnCancelADSD.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
