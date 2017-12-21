@@ -118,56 +118,6 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
                         Intent intent = new Intent(getContext(), LoginActivity.class);
                         startActivity(intent);
                     }
-//                        final AlertDialog.Builder mbuilder = new AlertDialog.Builder(getActivity());
-//                        View mView = getLayoutInflater().inflate(R.layout.login_layout, null);
-//                        LoginButton btnGmail = (LoginButton) mView.findViewById(R.id.loginGmail);
-//                        //Button btnCancelADSD= (Button) mView.findViewById(R.id.btn_CancelADSD);
-//                        ImageButton btnClose = (ImageButton) mView.findViewById(R.id.btnClose);
-//                        mbuilder.setView(mView);
-//                        final AlertDialog dialog = mbuilder.create();
-//                        dialog.show();
-//                        btnGmail.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-////                                Toast.makeText(getActivity(), "Login Gmail!", Toast.LENGTH_LONG).show();
-////                                openCreateKaraoke();
-//                               // dialog.cancel();
-//                            }
-//                        });
-//
-//                        btnClose.setOnClickListener(new View.OnClickListener(){
-//                            @Override
-//                            public void onClick(View view) {
-//                                dialog.cancel();
-//                            }
-//                        });
-//                    btnLogin_Face.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Toast.makeText(getActivity(), "Login Facebook!", Toast.LENGTH_LONG).show();
-//                            openCreateKaraoke();
-//                            dialog.cancel();
-//                        }
-//                    });
-                        /*btnGmail.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(SeeDetails.this, "Login Gmail!", Toast.LENGTH_LONG).show();
-                                openCearteKaraoke();
-                                dialog.cancel();
-                            }
-                        });*/
-
-                    /*btnCancelADSD.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });*/
-                //}
-                //else {
-                //    openCearteKaraoke();
-                //}
             }
         });
 

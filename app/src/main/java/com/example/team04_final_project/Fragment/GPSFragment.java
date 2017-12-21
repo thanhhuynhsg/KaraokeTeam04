@@ -26,8 +26,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.team04_final_project.DirectionActivity;
 import com.example.team04_final_project.GPSTracker;
 import com.example.team04_final_project.R;
+import com.example.team04_final_project.SeeDetails;
 import com.example.team04_final_project.data.Karaoke;
 import com.example.team04_final_project.data.LatLngKaraoke;
 import com.google.android.gms.common.ConnectionResult;
@@ -91,7 +93,7 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
 
         latitude = mLocation.getLatitude();
         longtitude = mLocation.getLongitude();
-        Toast.makeText(getActivity(),""+latitude+longtitude,Toast.LENGTH_LONG).show();
+
         FragmentManager fm = getChildFragmentManager();
         mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
         if (mapFragment == null) {
@@ -107,14 +109,16 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
             i++;
             LatLng mLatlng = new LatLng(latlng.getLat(),latlng.getLng());
             Double kc = CalculationByDistance(myLatLng,mLatlng) * 1000;
-            String title = latlng.getTitle().toString();
-            String snippet = latlng.getSnippet().toString();
+            final String title = latlng.getTitle().toString();
+            final String snippet = latlng.getSnippet().toString();
             // Những địa điểm trong vòng 5km (mặc định từ chỗ đang đứng)
             if(kc < radius) {
                 Marker marker = mMap.addMarker(new MarkerOptions().position(mLatlng).title(title).snippet(snippet).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon)));
             }
         }
+
     }
+
     public double CalculationByDistance(LatLng StartP, LatLng EndP){
         int Radius = 6371;// radius of earth in Km
         double lat1 = StartP.latitude;
@@ -146,11 +150,6 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             mMap.setMyLocationEnabled(true);
         }
-
-//        if(ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-//            mMap.setMyLocationEnabled(true);
-//            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-//        }
         myLatLng = new LatLng(latitude,longtitude);
         mMap.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.location))
@@ -165,6 +164,16 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(17),2000,null);
         mMap.addCircle(circleOptions);
         addLatLngKaraoke();
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+               String address = marker.getSnippet().toString();
+                    Intent intent = new Intent(getActivity(), DirectionActivity.class);
+                    intent.putExtra("ADDRESS",address);
+                    startActivity(intent);
+                return true;
+            }
+        });
 
 
     }

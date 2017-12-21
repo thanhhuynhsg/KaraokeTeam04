@@ -1,7 +1,9 @@
 package com.example.team04_final_project;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -9,7 +11,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 /**
  * Created by ToanLam on 12/21/2017.
@@ -20,7 +25,6 @@ public class GPSTracker extends Service implements LocationListener {
     boolean isGPSEnabled =false;
     boolean isNetworkEnabled =false;
     boolean canGetLocation = false;
-
     Location location;
     protected LocationManager locationManager;
 
@@ -84,4 +88,5 @@ public class GPSTracker extends Service implements LocationListener {
     public IBinder onBind(Intent arg0){
         return null;
     }
+
 }
