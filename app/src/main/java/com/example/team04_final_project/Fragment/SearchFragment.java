@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.team04_final_project.LoginActivity;
-import com.example.team04_final_project.MainActivity;
 import com.example.team04_final_project.R;
+import com.example.team04_final_project.ReservationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -25,7 +25,7 @@ public class SearchFragment extends Fragment {
         // Required empty public constructor
     }
 
-    Button btnSearch, btnLogout;
+    Button btnSearch, btnLogout, btndp;
     LoginActivity loginActivity;
     private FirebaseAuth mAuth;
     @Override
@@ -41,6 +41,15 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        btndp = (Button) view.findViewById(R.id.btndp);
+        btndp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ReservationActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -9,11 +9,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.example.team04_final_project.data.LatLngKaraoke;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -21,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -55,9 +60,8 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
     private LatLngBounds latlngBounds;
     private Button bNavigation;
     private Polyline newPolyline;
-    private double startLat, startLng, endLat, endLng;
+    public double startLat, startLng, endLat, endLng;
     private  String mAddress;
-    private TextView thoigian, khoangcach;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +73,6 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        thoigian = (TextView)findViewById(R.id.tvDuration);
-        khoangcach=(TextView)findViewById(R.id.tvDistance);
 
         bNavigation = (Button) findViewById(R.id.btGo);
         bNavigation.setOnClickListener(new View.OnClickListener() {
@@ -95,8 +96,8 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
 
                     protected void onPostExecute(Long result) {
                         findDirections(startLat, startLng, endLat, endLng, "driving");
-                       thoigian.setText(AsyncTaskDrawDirection.getDuration);
-                       khoangcach.setText(AsyncTaskDrawDirection.getDistance);
+                        LatLng ln = new LatLng(endLat, endLng);
+                        addMarker(ln);
                     }
                 }
                 new Sess().execute();
@@ -144,15 +145,22 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
                 if (once == 1) {
                     mMap.clear();
                     /*mMap.addMarker(new MarkerOptions()
-                            .position(loc)
+                            .position(nloc)
                             .title("Joey")
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.moto)));*/
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon)));*/
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
                     once = 0;
                 }
             }
         }
     };
+
+    public  void addMarker(LatLng latlon){
+        mMap.addMarker(new MarkerOptions()
+                .position(latlon)
+                .title("")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon)));
+    }
 
     public void handleGetDirectionsResult(ArrayList<LatLng> directionPoints) {
         PolylineOptions rectLine = new PolylineOptions().width(5).color(Color.RED);

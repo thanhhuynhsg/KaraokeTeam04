@@ -3,8 +3,10 @@ package com.example.team04_final_project.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -167,10 +169,25 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-               String address = marker.getSnippet().toString();
-                    Intent intent = new Intent(getActivity(), DirectionActivity.class);
-                    intent.putExtra("ADDRESS",address);
-                    startActivity(intent);
+                final String address = marker.getSnippet().toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Tên quán: "+marker.getTitle())
+                        .setMessage("Địa chỉ: "+marker.getSnippet())
+                        .setPositiveButton("Đi Đến", new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int id) {
+                                // FIRE ZE MISSILES!
+                                Intent intent = new Intent(getActivity(), DirectionActivity.class);
+                                intent.putExtra("ADDRESS",address);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert11 = builder.create();
+                alert11.show();
                 return true;
             }
         });
