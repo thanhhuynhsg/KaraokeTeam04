@@ -11,23 +11,12 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp">
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/editText5"
-            android:text="Logout" />
-
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_below="@+id/btn_logout"
             android:ems="10"
             android:hint="Tìm theo tên"
             android:inputType="textPersonName" />
@@ -91,9 +80,28 @@
             android:id="@+id/btndp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_logout"
-            android:layout_alignStart="@+id/btn_logout"
-            android:layout_marginBottom="11dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
             android:text="Đặt Phòng" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Logout" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_ListKaraoke"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_above="@+id/btndp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/btn_Search"
+            android:scrollbars="vertical"
+            android:transitionGroup="true" />
+
     </RelativeLayout>
+
 </FrameLayout>
