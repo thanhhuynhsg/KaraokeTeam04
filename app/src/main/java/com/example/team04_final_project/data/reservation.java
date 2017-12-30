@@ -1,7 +1,7 @@
 package com.example.team04_final_project.data;
 
 /**
- * Created by huynh_000 on 12/21/2017.
+ * Created by ThanhHuynh on 12/21/2017.
  */
 
 public class reservation {

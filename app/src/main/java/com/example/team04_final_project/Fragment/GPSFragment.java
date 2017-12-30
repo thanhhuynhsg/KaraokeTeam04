@@ -153,13 +153,7 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
             mMap.setMyLocationEnabled(true);
         }
         myLatLng = new LatLng(latitude,longtitude);
-        mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.location))
-                .anchor(0.0f, 1.0f)
-                .position(myLatLng)
-                .title("Bạn đang đứng tại đây")
-                .snippet("Chúc bạn có những giây phút thư giản vui vẻ nhất")
-        );
+
         circleOptions = new CircleOptions().center(myLatLng).radius(5000).strokeWidth(2).strokeColor(Color.BLUE).fillColor(Color.parseColor("#500084d3"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 17));
         mMap.getUiSettings().setZoomControlsEnabled(true);

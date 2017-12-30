@@ -39,6 +39,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
+/**
+ * Created by ThanhHuynh on 12/21/2017.
+ */
+
+
 public class ReservationActivity extends AppCompatActivity {
 
     GridView gv;
@@ -85,8 +90,8 @@ public class ReservationActivity extends AppCompatActivity {
         mFirebaseDatabaseReference.child("DatCho").child("datcho").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                 dc = (String) dataSnapshot.getValue();
-                 getlist = new ArrayList<String>(Arrays.asList(dc.split(" ")));
+                dc = (String) dataSnapshot.getValue();
+                getlist = new ArrayList<String>(Arrays.asList(dc.split(" ")));
 
                 for(int i=1; i<=24; i++){
                     list.add(""+i);

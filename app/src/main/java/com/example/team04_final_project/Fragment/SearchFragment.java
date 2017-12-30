@@ -119,6 +119,7 @@ public class SearchFragment extends Fragment implements IShowDetail {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ReservationActivity.class);
                 startActivity(intent);
+                Toast.makeText(getContext(), "Nhấn và giữ để thực hiện chức năng đặt phòng", Toast.LENGTH_SHORT).show();
             }
         });
 
