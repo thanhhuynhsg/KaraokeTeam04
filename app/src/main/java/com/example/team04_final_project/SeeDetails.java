@@ -1,7 +1,6 @@
 package com.example.team04_final_project;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -16,22 +15,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.team04_final_project.Fragment.GPSFragment;
 import com.example.team04_final_project.adapter.ReviewAndCommentAdapter;
 import com.example.team04_final_project.adapter.SeeDetailsVPAdapter;
-import com.example.team04_final_project.data.Karaoke;
 import com.example.team04_final_project.data.Rating_Comment;
-import com.example.team04_final_project.data.ReviewAndComment;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,8 +32,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -60,14 +49,11 @@ public class SeeDetails extends AppCompatActivity {
     private RatingBar ratingBar;
     private GoogleSignInClient mGoogleSignInClient;
     public String mID,mName,mAddress,mPrice,mPhone,mDesc,mLogo;
-    Float mLat,mLon;
-    private List<Karaoke> karaokeList;
     private RecyclerView rcReviewAndComment;
     private List<Rating_Comment> reviewAndCommentList;
     private ReviewAndCommentAdapter reviewAndCommentAdapter;
     //Thông tin của người đăng nhập
     private FirebaseAuth mAuth;
-    private LoginActivity loginActivity;
     private String iddn,namedn,avatadn;
     private DatabaseReference mData;
 
@@ -85,6 +71,16 @@ public class SeeDetails extends AppCompatActivity {
         TextView phone = (TextView)findViewById(R.id.txt_phone);
         TextView description = (TextView)findViewById(R.id.txt_description);
 
+        //get dữ liêu từ KaraokeFragment
+        Intent intent = getIntent();
+        mID = intent.getStringExtra("ID");
+        mName= intent.getStringExtra("NAME");
+        mAddress= intent.getStringExtra("ADDRESS");
+        mPrice= intent.getStringExtra("PRICE");
+        mPhone= intent.getStringExtra("PHONE");
+        mDesc= intent.getStringExtra("DESC");
+        mLogo = intent.getStringExtra("LOGO");
+
         mData = FirebaseDatabase.getInstance().getReference();
         //Lấy thông tin người đăng nhập
         mAuth = FirebaseAuth.getInstance();
@@ -96,7 +92,6 @@ public class SeeDetails extends AppCompatActivity {
              avatadn = user.getPhotoUrl().toString();
 
         }
-
         //List Comment
         rcReviewAndComment = (RecyclerView) findViewById(R.id.rcv_ListComment);
         ///List Comment
@@ -110,12 +105,9 @@ public class SeeDetails extends AppCompatActivity {
         reviewAndCommentAdapter = new ReviewAndCommentAdapter(reviewAndCommentList, this);
         rcReviewAndComment.setAdapter(reviewAndCommentAdapter);
 
-//        Rating_Comment raco = dataSnapshot.getValue(Rating_Comment.class);
-//        reviewAndCommentList.add(new Rating_Comment(raco.getIdKaraoke(),raco.getIdUsser(),raco.getuRating(),raco.getuComment(),raco.getuName(),raco.getuAvata()));
-//        reviewAndCommentAdapter.notifyDataSetChanged();
-        mData = FirebaseDatabase.getInstance().getReference();
-       // final Query query = mData.child("Rating_Comment").orderByChild("idKaraoke").equalTo(mID);
-        mData.child("Rating_Comment").addChildEventListener(new ChildEventListener() {
+        // Loc danh sách các user đánh giá địa điểm karaoke
+       final Query query = mData.child("Rating_Comment").orderByChild("idKaraoke").equalTo(mID);
+       query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Rating_Comment raco = dataSnapshot.getValue(Rating_Comment.class);
@@ -144,20 +136,9 @@ public class SeeDetails extends AppCompatActivity {
             }
         });
 
-        //Show data
-        karaokeList = new ArrayList<Karaoke>();
 
-        //get dữ liêu từ KaraokeFragment
-        Intent intent = getIntent();
-        mID = intent.getStringExtra("ID");
-        mName= intent.getStringExtra("NAME");
-        mAddress= intent.getStringExtra("ADDRESS");
-        mPrice= intent.getStringExtra("PRICE");
-        mPhone= intent.getStringExtra("PHONE");
-        mDesc= intent.getStringExtra("DESC");
-        mLat = intent.getFloatExtra("LAT",0);
-        mLon = intent.getFloatExtra("LON",0);
-        mLogo = intent.getStringExtra("LOGO");
+
+
 
         ivBackSeeDetails = (ImageView) findViewById(R.id.iv_BackSeeDetails);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
