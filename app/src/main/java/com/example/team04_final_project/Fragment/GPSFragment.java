@@ -92,9 +92,14 @@ public class GPSFragment extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
         gpsTracker = new GPSTracker(getActivity());
         mLocation = gpsTracker.getLocation();
+        try{
+            latitude = mLocation.getLatitude();
+            longtitude = mLocation.getLongitude();
+        }
+        catch (Exception e){
+            Toast.makeText(getActivity(),"Vui lòng kết nối Internet hoặc mở GPS",Toast.LENGTH_LONG).show();
+        }
 
-        latitude = mLocation.getLatitude();
-        longtitude = mLocation.getLongitude();
 
         FragmentManager fm = getChildFragmentManager();
         mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
