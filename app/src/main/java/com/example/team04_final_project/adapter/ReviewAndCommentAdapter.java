@@ -10,10 +10,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.example.team04_final_project.R;
 import com.example.team04_final_project.data.Rating_Comment;
-import com.example.team04_final_project.data.ReviewAndComment;
 
 import java.util.List;
 

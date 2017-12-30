@@ -82,7 +82,8 @@ public class SearchFragment extends Fragment implements IShowDetail {
             public void onClick(View v) {
                 karaokeList.clear();
                 mData = FirebaseDatabase.getInstance().getReference();
-                mData.child("Karaoke").orderByChild("mName").startAt(name.getText().toString()).addChildEventListener(new ChildEventListener() {
+                mData.child("Karaoke").orderByChild("mName").startAt(name.getText().toString())
+                        .addChildEventListener(new ChildEventListener() {
                 //mData.child("Karaoke").orderByChild("mPrice").startAt(149).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {

@@ -136,10 +136,8 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
         mPrice = karaokeAdapter.getKaraokeList().get(position).getmPrice();
         mPhone = karaokeAdapter.getKaraokeList().get(position).getmPhone();
         mDescription = karaokeAdapter.getKaraokeList().get(position).getmDescription();
-        mLat = karaokeAdapter.getKaraokeList().get(position).getmLat();
-        mLon = karaokeAdapter.getKaraokeList().get(position).getmLon();
         mLogo =  karaokeAdapter.getKaraokeList().get(position).getmLogo();
-        Intent intent = new Intent(getActivity().getBaseContext(),SeeDetails.class);
+        Intent intent = new Intent(getActivity(),SeeDetails.class);
         intent.putExtra("ID",mID);
         intent.putExtra("NAME",mName);
         intent.putExtra("ADDRESS",mAddress);
@@ -147,8 +145,6 @@ public class KaraokeFragment extends Fragment implements IShowDetail{
         intent.putExtra("PHONE",mPhone);
         intent.putExtra("DESC",mDescription);
         intent.putExtra("LOGO",mLogo);
-        intent.putExtra("LAT",mLat);
-        intent.putExtra("LON",mLon);
         getActivity().startActivity(intent);
 
     }
